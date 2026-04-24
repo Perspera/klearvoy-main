@@ -24,3 +24,7 @@ jobs:
           test -f docs/architecture.md
           test -f docs/development-process.md
           test -f docs/release-process.md
+
+      - name: Run preflight check script
+        shell: pwsh
+        run: ./check.ps1
