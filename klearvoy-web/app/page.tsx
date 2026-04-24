@@ -66,7 +66,7 @@ const HomePage: React.FC = () => {
             <div className="md:w-1/2">
               <div className="h-64 md:h-80 rounded-lg overflow-hidden">
                 <Image
-                  src="/assets/images/company/production-equipment-reference.png"
+                  src="/assets/images/hero/home-banner-bg.png"
                   alt="Klearvoy Production Equipment"
                   fill
                   className="object-cover"
