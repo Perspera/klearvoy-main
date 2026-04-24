@@ -6,8 +6,18 @@ const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="relative bg-gray-900 text-white py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative py-24">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/assets/images/hero/home-banner-bg.png"
+            alt="Hardware Furniture Solutions"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
             Precision Crafted Hardware Furniture Solutions
           </h1>
@@ -54,11 +64,13 @@ const HomePage: React.FC = () => {
               </Link>
             </div>
             <div className="md:w-1/2">
-              <div className="bg-gray-200 h-64 md:h-80 rounded-lg overflow-hidden">
-                {/* Placeholder for company image */}
-                <div className="w-full h-full flex items-center justify-center text-gray-500">
-                  Company Image
-                </div>
+              <div className="h-64 md:h-80 rounded-lg overflow-hidden">
+                <Image
+                  src="/assets/images/company/production-equipment-reference.png"
+                  alt="Klearvoy Production Equipment"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
           </div>
@@ -76,8 +88,13 @@ const HomePage: React.FC = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="h-48 bg-gray-200 flex items-center justify-center text-gray-500">
-                Wardrobe Hardware
+              <div className="h-48 relative overflow-hidden">
+                <Image
+                  src="/assets/images/products/wardrobe-handle-butterfly.png"
+                  alt="Premium Wardrobe Hardware"
+                  fill
+                  className="object-cover"
+                />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Premium Wardrobe Hardware</h3>
@@ -91,8 +108,13 @@ const HomePage: React.FC = () => {
               </div>
             </div>
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="h-48 bg-gray-200 flex items-center justify-center text-gray-500">
-                Board Materials
+              <div className="h-48 relative overflow-hidden">
+                <Image
+                  src="/assets/images/products/premium-board-materials.png"
+                  alt="Premium Board Materials"
+                  fill
+                  className="object-cover"
+                />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Premium Board Materials</h3>
@@ -106,8 +128,13 @@ const HomePage: React.FC = () => {
               </div>
             </div>
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="h-48 bg-gray-200 flex items-center justify-center text-gray-500">
-                Engineering Solutions
+              <div className="h-48 relative overflow-hidden">
+                <Image
+                  src="/assets/images/products/engineering-solution-scene.png"
+                  alt="Engineering Solutions"
+                  fill
+                  className="object-cover"
+                />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Engineering Solutions</h3>
