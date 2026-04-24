@@ -57,6 +57,7 @@ cd "f:\APP\klearvoy\klearvoy-main\klearvoy-frontend"
 - `404.html` 含 `noindex`
 - `index.htm` 正确引用 favicon
 - 自动扫描 `index.htm` 中的本地 `src/href` 资源引用并校验文件存在性（缺失会输出清单并失败）
+<!-- - 自动探测 `https://www.klearvoy.com/...` 链接可用性（异常时告警，不阻塞通过） -->
 
 ## 分支规范
 

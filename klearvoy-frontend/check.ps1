@@ -1,4 +1,4 @@
-$ErrorActionPreference = "Stop"
+﻿$ErrorActionPreference = "Stop"
 
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 
@@ -10,6 +10,10 @@ function Fail([string]$msg) {
 
 function Pass([string]$msg) {
   Write-Host "OK: $msg" -ForegroundColor Green
+}
+
+function Warn([string]$msg) {
+  Write-Host "WARN: $msg" -ForegroundColor Yellow
 }
 
 function Is-LocalAssetRef([string]$value) {
@@ -59,17 +63,43 @@ if ($index -notmatch '(?i)<link\s+rel="icon"\s+href="/favicon\.svg"\s+type="imag
 }
 Pass "index.htm references favicon.svg"
 
-# Scan local asset refs from index.htm and ensure they exist.
+# 扫描 index.htm 中的本地资源引用，并确认文件存在。
 $refPattern = '(?i)\b(?:src|href)\s*=\s*(["''])(?<url>[^"'']+)\1'
 $refMatches = [regex]::Matches($index, $refPattern)
 $missing = @()
+$domainLinkWarnings = @()
 $checked = New-Object 'System.Collections.Generic.HashSet[string]'
+$checkedDomainLinks = New-Object 'System.Collections.Generic.HashSet[string]'
 
 foreach ($m in $refMatches) {
-  $url = $m.Groups['url'].Value.Trim()
+  $url = $m.Groups["url"].Value.Trim()
+  if ([string]::IsNullOrWhiteSpace($url)) { continue }
+
+  # 外链仅检查 klearvoy 自有域名；不可用时仅告警，不直接失败。
+  if ($url -match '^https://www\.klearvoy\.com/') {
+    if (-not $checkedDomainLinks.Add($url)) { continue }
+    try {
+      $response = Invoke-WebRequest -Uri $url -Method Head -TimeoutSec 10 -ErrorAction Stop
+      if ($response.StatusCode -ge 400) {
+        $domainLinkWarnings += "$url (HTTP $($response.StatusCode))"
+      }
+    } catch {
+      try {
+        $response = Invoke-WebRequest -Uri $url -Method Get -TimeoutSec 10 -ErrorAction Stop
+        if ($response.StatusCode -ge 400) {
+          $domainLinkWarnings += "$url (HTTP $($response.StatusCode))"
+        }
+      } catch {
+        $domainLinkWarnings += "$url ($($_.Exception.Message))"
+      }
+    }
+    continue
+  }
+
+  # 忽略第三方链接及非文件协议。
   if (-not (Is-LocalAssetRef $url)) { continue }
 
-  # Normalize /foo => foo so checks are always relative to repo root.
+  # 统一路径格式：将 /foo 转为 foo，始终以仓库根目录为基准检查。
   $normalized = $url -replace '^\./', '' -replace '^/', ''
   if (-not $checked.Add($normalized)) { continue }
 
@@ -88,6 +118,15 @@ if ($missing.Count -gt 0) {
 }
 Pass "All local asset references in index.htm exist"
 
+if ($domainLinkWarnings.Count -gt 0) {
+  Write-Host ""
+  Warn "Klearvoy domain links with availability warnings (non-blocking):"
+  foreach ($w in $domainLinkWarnings) {
+    Warn " - $w"
+  }
+} elseif ($checkedDomainLinks.Count -gt 0) {
+  Pass "Klearvoy domain links are reachable"
+}
+
 Write-Host ""
 Write-Host "All checks passed." -ForegroundColor Green
-
