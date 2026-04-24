@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 const ContactPage: React.FC = () => {
   return (
@@ -16,6 +17,16 @@ const ContactPage: React.FC = () => {
               <div>
                 <h4 className="font-medium text-gray-900">Phone / WhatsApp</h4>
                 <p className="text-gray-700">+86 156 9241 5580</p>
+                <div className="mt-3">
+                  <h5 className="text-sm font-medium text-gray-700 mb-2">Scan to connect on WhatsApp</h5>
+                  <Image
+                    src="/assets/images/contact/whatsapp-qr-code.jpg"
+                    alt="WhatsApp QR Code"
+                    width={150}
+                    height={150}
+                    className="rounded-md"
+                  />
+                </div>
               </div>
               <div>
                 <h4 className="font-medium text-gray-900">Email</h4>
