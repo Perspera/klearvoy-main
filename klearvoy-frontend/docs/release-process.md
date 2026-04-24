@@ -36,6 +36,7 @@ cd "f:\APP\klearvoy\klearvoy-main\klearvoy-frontend"
 - `sitemap.xml` 包含站点主域名
 - `404.html` 含 `noindex`
 - `index.htm` 正确引用 favicon
+- 自动扫描 `index.htm` 中的本地 `src/href` 资源引用并校验文件存在性（缺失会输出清单并失败）
 
 ## 发布前检查清单
 
