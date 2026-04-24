@@ -10,17 +10,17 @@ const DownloadPage: React.FC = () => {
           <div className="space-y-4">
             <div className="flex items-center justify-between p-4 border border-gray-200 rounded-md hover:bg-gray-50">
               <div>
-                <h4 className="font-medium text-gray-900">Handle Catalog</h4>
-                <p className="text-sm text-gray-500">PDF, 2.5MB</p>
+                <h4 className="font-medium text-gray-900">Klearvoy Catalog 2026</h4>
+                <p className="text-sm text-gray-500">PDF, Catalog</p>
               </div>
-              <a href="#" className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">Download</a>
+              <a href="/assets/catalogs/new-klearvoy-catalog-2026.pdf" className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700" download>Download</a>
             </div>
             <div className="flex items-center justify-between p-4 border border-gray-200 rounded-md hover:bg-gray-50">
               <div>
                 <h4 className="font-medium text-gray-900">Closet Accessories Catalog</h4>
-                <p className="text-sm text-gray-500">PDF, 1.8MB</p>
+                <p className="text-sm text-gray-500">PDF, Catalog</p>
               </div>
-              <a href="#" className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">Download</a>
+              <a href="/assets/catalogs/closet-accessories.pdf" className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700" download>Download</a>
             </div>
           </div>
           <h3 className="text-xl font-semibold text-gray-900 mt-8 mb-4">Technical Documents</h3>
