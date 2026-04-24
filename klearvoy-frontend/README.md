@@ -20,6 +20,43 @@ Klearvoy 官方网站工程仓库。
 4. 提交 PR，并按 `docs/pr-checklist.md` 完成检查项。
 5. 通过评审且 CI 通过后再合并。
 
+## 本地预览与自检
+
+### 1) 本地预览
+
+在仓库根目录执行：
+
+```powershell
+cd "f:\APP\klearvoy\klearvoy-main\klearvoy-frontend"
+.\preview.ps1
+```
+
+默认端口为 `5500`，浏览器访问：
+
+`http://localhost:5500/index.htm`
+
+如需指定端口：
+
+```powershell
+.\preview.ps1 8000
+```
+
+### 2) 发布前自检
+
+在 `klearvoy-frontend` 目录执行：
+
+```powershell
+.\check.ps1
+```
+
+当前自检覆盖项：
+
+- 关键文件存在：`index.htm`、`404.html`、`robots.txt`、`sitemap.xml`、`favicon.svg`
+- `robots.txt` 包含站点地图地址
+- `sitemap.xml` 包含站点主域名
+- `404.html` 含 `noindex`
+- `index.htm` 正确引用 favicon
+
 ## 分支规范
 
 - `main`：可用于生产发布的代码。
