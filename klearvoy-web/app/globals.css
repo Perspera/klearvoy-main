@@ -1,12 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Josefin+Sans:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #F8FAFC;
-  --foreground: #020617;
-  --primary: #0F172A;
-  --secondary: #334155;
-  --cta: #0369A1;
+  --background: #FFFFFF;
+  --foreground: #171717;
+  --primary: #171717;
+  --secondary: #6B7280;
+  --accent: #C4A484;
+  --accent-dark: #B8860B;
+  --cta: #171717;
+  --border: #E5E7EB;
+  --card-bg: #FAFAFA;
 }
 
 @theme inline {
@@ -14,20 +18,14 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-accent-dark: var(--accent-dark);
   --color-cta: var(--cta);
-  --font-sans: 'Open Sans', system-ui, sans-serif;
-  --font-heading: 'Poppins', system-ui, sans-serif;
+  --color-border: var(--border);
+  --color-card-bg: var(--card-bg);
+  --font-sans: 'Josefin Sans', system-ui, sans-serif;
+  --font-heading: 'Cinzel', serif;
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --primary: #F8FAFC;
-    --secondary: #CBD5E1;
-    --cta: #38BDF8;
-  }
 }
 
 body {
@@ -38,8 +36,10 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
+  font-weight: 500;
+  letter-spacing: 0.05em;
 }
 
-.transition-standard {
-  transition: all 0.2s ease-in-out;
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
