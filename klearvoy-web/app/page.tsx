@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 const HomePage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background pt-20">
       {/* Hero Section */}
       <section className="relative py-24">
         <div className="absolute inset-0 z-0">
@@ -18,7 +18,7 @@ const HomePage: React.FC = () => {
           <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6">
             Precision Crafted Hardware Furniture Solutions
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8">
@@ -27,13 +27,13 @@ const HomePage: React.FC = () => {
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link
               href="/products"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-md transition-colors"
+              className="bg-cta hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-md transition-standard cursor-pointer"
             >
               Explore Products
             </Link>
             <Link
               href="/contact"
-              className="bg-transparent border border-white hover:bg-white hover:text-gray-900 font-medium py-3 px-6 rounded-md transition-colors"
+              className="bg-transparent border border-white hover:bg-white hover:text-primary font-medium py-3 px-6 rounded-md transition-standard cursor-pointer"
             >
               Contact Us
             </Link>
@@ -46,7 +46,7 @@ const HomePage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="md:w-1/2">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">About Klearvoy</h2>
+              <h2 className="text-3xl font-bold font-heading text-primary mb-6">About Klearvoy</h2>
               <p className="text-gray-700 mb-4 leading-relaxed">
                 Klearvoy is a leading manufacturer of high-quality hardware furniture, integrating R&D, design, production, and global sales. We specialize in durable, ergonomic, and cost-effective solutions for offices, hotels, schools, hospitals, and residential environments.
               </p>
@@ -55,7 +55,7 @@ const HomePage: React.FC = () => {
               </p>
               <Link
                 href="/about"
-                className="text-blue-600 font-medium hover:underline flex items-center"
+                className="text-cta font-medium hover:underline flex items-center transition-standard cursor-pointer"
               >
                 Learn more
                 <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -64,7 +64,7 @@ const HomePage: React.FC = () => {
               </Link>
             </div>
             <div className="md:w-1/2">
-              <div className="h-64 md:h-80 rounded-lg overflow-hidden">
+              <div className="h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
                 <Image
                   src="/assets/images/hero/home-banner-bg.png"
                   alt="Klearvoy Production Equipment"
@@ -78,16 +78,16 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Products Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Products</h2>
+            <h2 className="text-3xl font-bold font-heading text-primary mb-4">Our Products</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Explore our range of high-quality hardware furniture solutions designed for various applications
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-standard cursor-pointer">
               <div className="h-48 relative overflow-hidden">
                 <Image
                   src="/assets/images/products/wardrobe-handle-butterfly.png"
@@ -97,17 +97,17 @@ const HomePage: React.FC = () => {
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Premium Wardrobe Hardware</h3>
+                <h3 className="text-xl font-semibold font-heading text-primary mb-2">Premium Wardrobe Hardware</h3>
                 <p className="text-gray-700 mb-4">High-quality wardrobe accessories with stable structure.</p>
                 <Link
                   href="/products"
-                  className="text-blue-600 font-medium hover:underline"
+                  className="text-cta font-medium hover:underline transition-standard"
                 >
                   View details
                 </Link>
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-standard cursor-pointer">
               <div className="h-48 relative overflow-hidden">
                 <Image
                   src="/assets/images/products/premium-board-materials.png"
@@ -117,17 +117,17 @@ const HomePage: React.FC = () => {
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Premium Board Materials</h3>
+                <h3 className="text-xl font-semibold font-heading text-primary mb-2">Premium Board Materials</h3>
                 <p className="text-gray-700 mb-4">Custom boards for multiple scenarios.</p>
                 <Link
                   href="/products"
-                  className="text-blue-600 font-medium hover:underline"
+                  className="text-cta font-medium hover:underline transition-standard"
                 >
                   View details
                 </Link>
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-standard cursor-pointer">
               <div className="h-48 relative overflow-hidden">
                 <Image
                   src="/assets/images/products/engineering-solution-scene.png"
@@ -137,11 +137,11 @@ const HomePage: React.FC = () => {
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Engineering Solutions</h3>
+                <h3 className="text-xl font-semibold font-heading text-primary mb-2">Engineering Solutions</h3>
                 <p className="text-gray-700 mb-4">Custom furniture project solution.</p>
                 <Link
                   href="/products"
-                  className="text-blue-600 font-medium hover:underline"
+                  className="text-cta font-medium hover:underline transition-standard"
                 >
                   View details
                 </Link>
@@ -152,15 +152,15 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-blue-600 text-white">
+      <section className="py-16 bg-cta text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-6">Ready to Start Your Project?</h2>
+          <h2 className="text-3xl font-bold font-heading mb-6">Ready to Start Your Project?</h2>
           <p className="text-xl mb-8">
             Contact us today to discuss your hardware furniture needs and get a personalized solution
           </p>
           <Link
             href="/contact"
-            className="bg-white text-blue-600 hover:bg-gray-100 font-medium py-3 px-8 rounded-md transition-colors inline-block"
+            className="bg-white text-cta hover:bg-gray-100 font-medium py-3 px-8 rounded-md transition-standard inline-block cursor-pointer"
           >
             Get in Touch
           </Link>
