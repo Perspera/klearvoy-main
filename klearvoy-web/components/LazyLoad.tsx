@@ -1,35 +1,49 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface LazyLoadProps {
   children: React.ReactNode;
-  fallback?: React.ReactNode;
-  className?: string;
+  threshold?: number;
+  once?: boolean;
 }
 
-export const LazyLoad: React.FC<LazyLoadProps> = ({ 
+const LazyLoad: React.FC<LazyLoadProps> = ({ 
   children, 
-  fallback = <LoadingPlaceholder />,
-  className = ''
+  threshold = 0.1, 
+  once = true 
 }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          if (once) {
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold }
+    );
+
+    const currentRef = ref.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [threshold, once]);
+
   return (
-    <div className={className}>
-      {children}
+    <div ref={ref}>
+      {isVisible ? children : null}
     </div>
   );
 };
 
-export const LoadingPlaceholder: React.FC<{ height?: string }> = ({ height = '200px' }) => (
-  <div 
-    className="animate-pulse bg-gray-200 rounded" 
-    style={{ height }}
-  />
-);
-
-export const PageLoading: React.FC = () => (
-  <div className="min-h-screen flex items-center justify-center">
-    <div className="flex flex-col items-center gap-4">
-      <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-      <p className="text-secondary text-sm">Loading...</p>
-    </div>
-  </div>
-);
+export default LazyLoad;

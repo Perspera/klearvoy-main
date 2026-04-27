@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
+import LazyLoad from '../components/LazyLoad';
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
@@ -75,17 +76,19 @@ const HomePage: React.FC = () => {
                 </svg>
               </Link>
             </div>
-            <div className="relative h-[500px]">
-              <Image
-                src="/assets/images/hero/home-banner-bg.png"
-                alt="Klearvoy Production"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                quality={85}
-                loading="lazy"
-              />
-            </div>
+            <LazyLoad>
+              <div className="relative h-[500px]">
+                <Image
+                  src="/assets/images/hero/home-banner-bg.png"
+                  alt="Klearvoy Production"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  quality={85}
+                  loading="lazy"
+                />
+              </div>
+            </LazyLoad>
           </div>
         </div>
       </section>
@@ -99,71 +102,77 @@ const HomePage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="group cursor-pointer">
-              <div className="relative h-80 overflow-hidden mb-6 bg-white">
-                <Image
-                  src="/assets/images/products/wardrobe-handle-butterfly.png"
-                  alt="Wardrobe Hardware"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-smooth duration-500"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  quality={80}
-                  loading="lazy"
-                />
+            <LazyLoad>
+              <div className="group cursor-pointer">
+                <div className="relative h-80 overflow-hidden mb-6 bg-white">
+                  <Image
+                    src="/assets/images/products/wardrobe-handle-butterfly.png"
+                    alt="Wardrobe Hardware"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-smooth duration-500"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    quality={80}
+                    loading="lazy"
+                  />
+                </div>
+                <h3 className="text-xl font-heading text-primary mb-2">{t('categories.wardrobe')}</h3>
+                <p className="text-secondary text-sm mb-4">{t('home.wardrobeDesc')}</p>
+                <Link
+                  href="/products"
+                  className="text-sm font-medium tracking-wider text-primary hover:text-accent-dark transition-smooth cursor-pointer"
+                >
+                  {t('home.viewDetails')} →
+                </Link>
               </div>
-              <h3 className="text-xl font-heading text-primary mb-2">{t('categories.wardrobe')}</h3>
-              <p className="text-secondary text-sm mb-4">{t('home.wardrobeDesc')}</p>
-              <Link
-                href="/products"
-                className="text-sm font-medium tracking-wider text-primary hover:text-accent-dark transition-smooth cursor-pointer"
-              >
-                {t('home.viewDetails')} →
-              </Link>
-            </div>
+            </LazyLoad>
 
-            <div className="group cursor-pointer">
-              <div className="relative h-80 overflow-hidden mb-6 bg-white">
-                <Image
-                  src="/assets/images/products/premium-board-materials.png"
-                  alt="Board Materials"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-smooth duration-500"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  quality={80}
-                  loading="lazy"
-                />
+            <LazyLoad>
+              <div className="group cursor-pointer">
+                <div className="relative h-80 overflow-hidden mb-6 bg-white">
+                  <Image
+                    src="/assets/images/products/premium-board-materials.png"
+                    alt="Board Materials"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-smooth duration-500"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    quality={80}
+                    loading="lazy"
+                  />
+                </div>
+                <h3 className="text-xl font-heading text-primary mb-2">{t('categories.board')}</h3>
+                <p className="text-secondary text-sm mb-4">{t('home.boardDesc')}</p>
+                <Link
+                  href="/products"
+                  className="text-sm font-medium tracking-wider text-primary hover:text-accent-dark transition-smooth cursor-pointer"
+                >
+                  {t('home.viewDetails')} →
+                </Link>
               </div>
-              <h3 className="text-xl font-heading text-primary mb-2">{t('categories.board')}</h3>
-              <p className="text-secondary text-sm mb-4">{t('home.boardDesc')}</p>
-              <Link
-                href="/products"
-                className="text-sm font-medium tracking-wider text-primary hover:text-accent-dark transition-smooth cursor-pointer"
-              >
-                {t('home.viewDetails')} →
-              </Link>
-            </div>
+            </LazyLoad>
 
-            <div className="group cursor-pointer">
-              <div className="relative h-80 overflow-hidden mb-6 bg-white">
-                <Image
-                  src="/assets/images/products/engineering-solution-scene.png"
-                  alt="Engineering Solutions"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-smooth duration-500"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  quality={80}
-                  loading="lazy"
-                />
+            <LazyLoad>
+              <div className="group cursor-pointer">
+                <div className="relative h-80 overflow-hidden mb-6 bg-white">
+                  <Image
+                    src="/assets/images/products/engineering-solution-scene.png"
+                    alt="Engineering Solutions"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-smooth duration-500"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    quality={80}
+                    loading="lazy"
+                  />
+                </div>
+                <h3 className="text-xl font-heading text-primary mb-2">{t('categories.engineering')}</h3>
+                <p className="text-secondary text-sm mb-4">{t('home.engineeringDesc')}</p>
+                <Link
+                  href="/products"
+                  className="text-sm font-medium tracking-wider text-primary hover:text-accent-dark transition-smooth cursor-pointer"
+                >
+                  {t('home.viewDetails')} →
+                </Link>
               </div>
-              <h3 className="text-xl font-heading text-primary mb-2">{t('categories.engineering')}</h3>
-              <p className="text-secondary text-sm mb-4">{t('home.engineeringDesc')}</p>
-              <Link
-                href="/products"
-                className="text-sm font-medium tracking-wider text-primary hover:text-accent-dark transition-smooth cursor-pointer"
-              >
-                {t('home.viewDetails')} →
-              </Link>
-            </div>
+            </LazyLoad>
           </div>
 
           <div className="text-center mt-12">
