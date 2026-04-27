@@ -6,6 +6,57 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import LazyLoad from '../components/LazyLoad';
 
+const productCategories = [
+  {
+    id: 'wardrobe',
+    title: '衣柜五金',
+    subtitle: '结构稳定的优质配件',
+    description: '完整的衣柜五金解决方案，包括拉手、铰链、滑轨等，确保衣柜的稳定性和美观性。',
+    image: '/assets/images/products/wardrobe-handle-butterfly.png',
+    category: 'wardrobe',
+  },
+  {
+    id: 'board',
+    title: '板材',
+    subtitle: '多种场景适用定制板材',
+    description: '高品质板材，适用于各种家具制造场景，提供多种规格和材质选择。',
+    image: '/assets/images/products/premium-board-materials.png',
+    category: 'board',
+  },
+  {
+    id: 'engineering',
+    title: '工程解决方案',
+    subtitle: '定制家具项目解决方案',
+    description: '为大型家具项目提供定制化的五金解决方案，满足不同工程需求。',
+    image: '/assets/images/products/engineering-solution-scene.png',
+    category: 'engineering',
+  },
+  {
+    id: 'handle',
+    title: '拉手和旋钮',
+    subtitle: '精致美观的家具拉手',
+    description: '设计精美、手感舒适的拉手和旋钮，为家具增添美感。',
+    image: '/assets/images/products/wardrobe-handle-butterfly.png',
+    category: 'handle',
+  },
+  {
+    id: 'hinge',
+    title: '铰链',
+    subtitle: '高品质家具铰链',
+    description: '精密制造的铰链，确保家具门的顺畅开启和关闭。',
+    image: '/assets/images/products/premium-board-materials.png',
+    category: 'hinge',
+  },
+  {
+    id: 'slide',
+    title: '滑轨',
+    subtitle: '顺滑静音的抽屉滑轨',
+    description: '高品质滑轨系统，提供顺滑、静音的抽屉使用体验。',
+    image: '/assets/images/products/engineering-solution-scene.png',
+    category: 'slide',
+  },
+];
+
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
 
@@ -93,7 +144,7 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Products Section - Grid Showcase */}
+      {/* Products Section - Modern Grid Showcase */}
       <section className="py-24 bg-card-bg">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -101,84 +152,44 @@ const HomePage: React.FC = () => {
             <h2 className="text-4xl md:text-5xl font-heading text-primary">{t('home.featuredProducts')}</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <LazyLoad>
-              <div className="group cursor-pointer">
-                <div className="relative h-80 overflow-hidden mb-6 bg-white">
-                  <Image
-                    src="/assets/images/products/wardrobe-handle-butterfly.png"
-                    alt="Wardrobe Hardware"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-smooth duration-500"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    quality={80}
-                    loading="lazy"
-                  />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {productCategories.map((product) => (
+              <LazyLoad key={product.id}>
+                <div className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-smooth duration-300">
+                  <div className="relative h-64 overflow-hidden">
+                    <Image
+                      src={product.image}
+                      alt={product.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-smooth duration-500"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      quality={85}
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-heading text-primary mb-2">{product.title}</h3>
+                    <p className="text-accent-dark text-sm font-medium mb-3">{product.subtitle}</p>
+                    <p className="text-secondary text-sm mb-4 leading-relaxed">{product.description}</p>
+                    <Link
+                      href={`/products?category=${product.category}`}
+                      className="inline-flex items-center text-sm font-medium text-primary hover:text-accent-dark transition-smooth group-hover:translate-x-1"
+                    >
+                      {t('home.viewDetails')}
+                      <svg className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </Link>
+                  </div>
                 </div>
-                <h3 className="text-xl font-heading text-primary mb-2">{t('categories.wardrobe')}</h3>
-                <p className="text-secondary text-sm mb-4">{t('home.wardrobeDesc')}</p>
-                <Link
-                  href="/products"
-                  className="text-sm font-medium tracking-wider text-primary hover:text-accent-dark transition-smooth cursor-pointer"
-                >
-                  {t('home.viewDetails')} →
-                </Link>
-              </div>
-            </LazyLoad>
-
-            <LazyLoad>
-              <div className="group cursor-pointer">
-                <div className="relative h-80 overflow-hidden mb-6 bg-white">
-                  <Image
-                    src="/assets/images/products/premium-board-materials.png"
-                    alt="Board Materials"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-smooth duration-500"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    quality={80}
-                    loading="lazy"
-                  />
-                </div>
-                <h3 className="text-xl font-heading text-primary mb-2">{t('categories.board')}</h3>
-                <p className="text-secondary text-sm mb-4">{t('home.boardDesc')}</p>
-                <Link
-                  href="/products"
-                  className="text-sm font-medium tracking-wider text-primary hover:text-accent-dark transition-smooth cursor-pointer"
-                >
-                  {t('home.viewDetails')} →
-                </Link>
-              </div>
-            </LazyLoad>
-
-            <LazyLoad>
-              <div className="group cursor-pointer">
-                <div className="relative h-80 overflow-hidden mb-6 bg-white">
-                  <Image
-                    src="/assets/images/products/engineering-solution-scene.png"
-                    alt="Engineering Solutions"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-smooth duration-500"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    quality={80}
-                    loading="lazy"
-                  />
-                </div>
-                <h3 className="text-xl font-heading text-primary mb-2">{t('categories.engineering')}</h3>
-                <p className="text-secondary text-sm mb-4">{t('home.engineeringDesc')}</p>
-                <Link
-                  href="/products"
-                  className="text-sm font-medium tracking-wider text-primary hover:text-accent-dark transition-smooth cursor-pointer"
-                >
-                  {t('home.viewDetails')} →
-                </Link>
-              </div>
-            </LazyLoad>
+              </LazyLoad>
+            ))}
           </div>
 
-          <div className="text-center mt-12">
+          <div className="text-center mt-16">
             <Link
               href="/products"
-              className="inline-block border-2 border-primary text-primary px-10 py-4 text-sm font-medium tracking-wider hover:bg-primary hover:text-white transition-smooth cursor-pointer"
+              className="inline-block bg-primary text-white px-12 py-4 text-sm font-medium tracking-wider hover:bg-secondary transition-smooth cursor-pointer rounded-sm"
             >
               {t('home.viewAll')}
             </Link>

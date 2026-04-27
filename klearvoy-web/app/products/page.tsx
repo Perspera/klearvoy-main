@@ -40,13 +40,13 @@ const ProductsPage: React.FC = () => {
       {/* Category Filter */}
       <section className="py-12 bg-card-bg">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-3">
             <button
               onClick={() => setSelectedCategory('all')}
-              className={`px-6 py-3 text-sm font-medium tracking-wider transition-smooth cursor-pointer ${
+              className={`px-8 py-3 text-sm font-medium tracking-wider transition-smooth cursor-pointer rounded-sm ${
                 selectedCategory === 'all'
-                  ? 'bg-primary text-white'
-                  : 'bg-white text-primary border border-primary hover:bg-primary hover:text-white'
+                  ? 'bg-primary text-white shadow-md'
+                  : 'bg-white text-primary border border-gray-300 hover:border-primary hover:bg-gray-50'
               }`}
             >
               {t('products.allProducts')}
@@ -55,10 +55,10 @@ const ProductsPage: React.FC = () => {
               <button
                 key={key}
                 onClick={() => setSelectedCategory(key)}
-                className={`px-6 py-3 text-sm font-medium tracking-wider transition-smooth cursor-pointer ${
+                className={`px-8 py-3 text-sm font-medium tracking-wider transition-smooth cursor-pointer rounded-sm ${
                   selectedCategory === key
-                    ? 'bg-primary text-white'
-                    : 'bg-white text-primary border border-primary hover:bg-primary hover:text-white'
+                    ? 'bg-primary text-white shadow-md'
+                    : 'bg-white text-primary border border-gray-300 hover:border-primary hover:bg-gray-50'
                 }`}
               >
                 {t(`categories.${key}`)}
@@ -76,30 +76,30 @@ const ProductsPage: React.FC = () => {
             <h2 className="text-4xl font-heading text-primary">{t('products.heading')}</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProducts.map(product => (
               <Link
                 key={product.id}
                 href={`/products/${product.id}`}
                 className="group block"
               >
-                <div className="relative h-96 overflow-hidden mb-6 bg-card-bg">
+                <div className="relative h-80 overflow-hidden mb-6 bg-card-bg rounded-lg">
                   <Image
                     src={product.image}
                     alt={product.name}
                     fill
                     className="object-cover group-hover:scale-105 transition-smooth duration-500"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    quality={80}
+                    quality={85}
                     loading="lazy"
                   />
                 </div>
-                <h3 className="text-2xl font-heading text-primary mb-3">{product.name}</h3>
+                <h3 className="text-xl font-heading text-primary mb-2">{product.name}</h3>
                 <p className="text-secondary leading-relaxed mb-4">
                   {product.description}
                 </p>
                 {product.isCustomizable && (
-                  <div className="text-sm font-medium text-accent-dark tracking-wider">{t('products.customizeAvailable')}</div>
+                  <div className="inline-block text-sm font-medium text-accent-dark tracking-wider">{t('products.customizeAvailable')}</div>
                 )}
               </Link>
             ))}
