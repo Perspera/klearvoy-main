@@ -1,7 +1,84 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Image from 'next/image';
+import { ContactFormData, FormErrors, validateForm } from '@/lib/contact-form';
 
 const ContactPage: React.FC = () => {
+  const [formData, setFormData] = useState<ContactFormData>({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    subject: '',
+    message: '',
+  });
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [statusMessage, setStatusMessage] = useState('');
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name as keyof FormErrors]) {
+      setErrors(prev => ({ ...prev, [name]: undefined }));
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitStatus('idle');
+    setStatusMessage('');
+
+    const validationErrors = validateForm(formData);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setSubmitStatus('success');
+        setStatusMessage(result.message);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          company: '',
+          subject: '',
+          message: '',
+        });
+        setErrors({});
+      } else {
+        setSubmitStatus('error');
+        setStatusMessage(result.message || 'Failed to send message');
+        if (result.errors) {
+          setErrors(result.errors);
+        }
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      setStatusMessage('Network error. Please check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Banner */}
@@ -29,7 +106,7 @@ const ContactPage: React.FC = () => {
             <div>
               <p className="text-sm tracking-widest text-accent-dark mb-4 uppercase">Get In Touch</p>
               <h2 className="text-4xl font-heading text-primary mb-8">Let's Discuss Your Project</h2>
-              
+
               <div className="space-y-8">
                 <div>
                   <h3 className="text-lg font-heading text-primary mb-3">Factory Address</h3>
@@ -38,18 +115,18 @@ const ContactPage: React.FC = () => {
                     Lishui Town, Nanhai District, Foshan
                   </p>
                 </div>
-                
+
                 <div>
                   <h3 className="text-lg font-heading text-primary mb-3">Phone / WhatsApp</h3>
                   <p className="text-secondary">+86 156 9241 5580</p>
                 </div>
-                
+
                 <div>
                   <h3 className="text-lg font-heading text-primary mb-3">Email</h3>
                   <p className="text-secondary">info@klearvoy.com</p>
                   <p className="text-secondary">hudson.zheng@klearvoy.com</p>
                 </div>
-                
+
                 <div>
                   <h3 className="text-lg font-heading text-primary mb-3">WhatsApp</h3>
                   <div className="mt-3">
@@ -64,43 +141,139 @@ const ContactPage: React.FC = () => {
                 </div>
               </div>
             </div>
-            
+
             {/* Contact Form */}
             <div className="bg-card-bg p-10">
               <h3 className="text-2xl font-heading text-primary mb-8">Send Us a Message</h3>
-              <form className="space-y-6">
+
+              {submitStatus === 'success' && (
+                <div className="mb-6 p-4 bg-green-50 border border-green-200 text-green-800 rounded">
+                  {statusMessage}
+                </div>
+              )}
+
+              {submitStatus === 'error' && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-800 rounded">
+                  {statusMessage}
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-primary mb-2">Name</label>
+                  <label htmlFor="name" className="block text-sm font-medium text-primary mb-2">
+                    Name <span className="text-red-500">*</span>
+                  </label>
                   <input
                     type="text"
                     id="name"
-                    className="w-full px-4 py-3 bg-white border border-border focus:border-accent-dark focus:outline-none transition-smooth"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-3 bg-white border ${
+                      errors.name ? 'border-red-500' : 'border-border'
+                    } focus:border-accent-dark focus:outline-none transition-smooth`}
                     placeholder="Your name"
                   />
+                  {errors.name && (
+                    <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+                  )}
                 </div>
+
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-primary mb-2">Email</label>
+                  <label htmlFor="email" className="block text-sm font-medium text-primary mb-2">
+                    Email <span className="text-red-500">*</span>
+                  </label>
                   <input
                     type="email"
                     id="email"
-                    className="w-full px-4 py-3 bg-white border border-border focus:border-accent-dark focus:outline-none transition-smooth"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-3 bg-white border ${
+                      errors.email ? 'border-red-500' : 'border-border'
+                    } focus:border-accent-dark focus:outline-none transition-smooth`}
                     placeholder="your@email.com"
                   />
+                  {errors.email && (
+                    <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                  )}
                 </div>
+
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-primary mb-2">Message</label>
+                  <label htmlFor="phone" className="block text-sm font-medium text-primary mb-2">
+                    Phone / WhatsApp
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 bg-white border border-border focus:border-accent-dark focus:outline-none transition-smooth"
+                    placeholder="+86 xxx xxxx xxxx"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="company" className="block text-sm font-medium text-primary mb-2">
+                    Company
+                  </label>
+                  <input
+                    type="text"
+                    id="company"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 bg-white border border-border focus:border-accent-dark focus:outline-none transition-smooth"
+                    placeholder="Your company name"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="subject" className="block text-sm font-medium text-primary mb-2">
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 bg-white border border-border focus:border-accent-dark focus:outline-none transition-smooth"
+                    placeholder="Inquiry about..."
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-primary mb-2">
+                    Message <span className="text-red-500">*</span>
+                  </label>
                   <textarea
                     id="message"
+                    name="message"
                     rows={5}
-                    className="w-full px-4 py-3 bg-white border border-border focus:border-accent-dark focus:outline-none transition-smooth resize-none"
-                    placeholder="Tell us about your project..."
+                    value={formData.message}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-3 bg-white border ${
+                      errors.message ? 'border-red-500' : 'border-border'
+                    } focus:border-accent-dark focus:outline-none transition-smooth resize-none`}
+                    placeholder="Tell us about your project, requirements, or questions..."
                   ></textarea>
+                  {errors.message && (
+                    <p className="mt-1 text-sm text-red-500">{errors.message}</p>
+                  )}
                 </div>
+
                 <button
                   type="submit"
-                  className="w-full bg-primary text-white py-4 text-sm font-medium tracking-wider hover:bg-secondary transition-smooth cursor-pointer"
+                  disabled={isSubmitting}
+                  className={`w-full py-4 text-sm font-medium tracking-wider transition-smooth cursor-pointer ${
+                    isSubmitting
+                      ? 'bg-gray-400 text-white cursor-not-allowed'
+                      : 'bg-primary text-white hover:bg-secondary'
+                  }`}
                 >
-                  SEND MESSAGE
+                  {isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}
                 </button>
               </form>
             </div>
