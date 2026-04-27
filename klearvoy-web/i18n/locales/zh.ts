@@ -105,6 +105,56 @@ export default {
     messageRequired: '请输入留言',
     messageTooShort: '留言至少需要10个字符',
   },
+  cases: {
+    title: '成功案例',
+    client: '客户',
+    officeProject: {
+      title: '办公项目',
+      description: '为跨国公司提供完整的办公家具解决方案。',
+      client: '全球科技公司',
+    },
+    hotelProject: {
+      title: '酒店装修',
+      description: '为五星级酒店连锁提供定制家具解决方案。',
+      client: '豪华酒店集团',
+    },
+  },
+  news: {
+    title: '新闻动态',
+    readMore: '阅读更多',
+    date1: '2026年4月20日',
+    date2: '2026年3月15日',
+    news1: {
+      title: 'Klearvoy 推出新产品系列',
+      description: '我们很高兴宣布推出全新高端五金系列，专为满足现代家具制造商不断变化的需求而设计。',
+    },
+    news2: {
+      title: '生产设施扩建',
+      description: 'Klearvoy 已完成生产设施的扩建，产能翻倍以满足不断增长的全球需求。',
+    },
+  },
+  download: {
+    title: '资料下载',
+    productCatalogs: '产品目录',
+    technicalDocuments: '技术文档',
+    format: 'PDF',
+    type: {
+      catalog: '目录',
+    },
+    download: '下载',
+    catalog1: {
+      name: 'Klearvoy 2026 产品目录',
+    },
+    catalog2: {
+      name: '衣柜配件目录',
+    },
+    specs: {
+      name: '产品规格',
+    },
+    guide: {
+      name: '安装指南',
+    },
+  },
   footer: {
     description: '为商业和住宅空间精心打造的五金家具解决方案。匠心工艺与现代设计完美结合。',
     quickLinks: '快速链接',

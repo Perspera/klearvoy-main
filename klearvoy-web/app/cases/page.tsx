@@ -1,25 +1,30 @@
+'use client';
+
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const CasesPage: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">Success Cases</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div className="h-64 bg-gray-200"></div>
+    <div className="min-h-screen bg-background py-12">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <h1 className="text-4xl font-heading text-primary mb-12">{t('cases.title')}</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-smooth">
+            <div className="h-64 bg-card-bg"></div>
             <div className="p-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Office Project</h3>
-              <p className="text-gray-700 mb-4">Complete office furniture solution for a multinational corporation.</p>
-              <div className="text-sm text-gray-500">Client: Global Tech Company</div>
+              <h3 className="text-xl font-heading text-primary mb-3">{t('cases.officeProject.title')}</h3>
+              <p className="text-secondary mb-4">{t('cases.officeProject.description')}</p>
+              <div className="text-sm text-accent-dark">{t('cases.client')}: {t('cases.officeProject.client')}</div>
             </div>
           </div>
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div className="h-64 bg-gray-200"></div>
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-smooth">
+            <div className="h-64 bg-card-bg"></div>
             <div className="p-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Hotel Renovation</h3>
-              <p className="text-gray-700 mb-4">Bespoke furniture solutions for a 5-star hotel chain.</p>
-              <div className="text-sm text-gray-500">Client: Luxury Hotel Group</div>
+              <h3 className="text-xl font-heading text-primary mb-3">{t('cases.hotelProject.title')}</h3>
+              <p className="text-secondary mb-4">{t('cases.hotelProject.description')}</p>
+              <div className="text-sm text-accent-dark">{t('cases.client')}: {t('cases.hotelProject.client')}</div>
             </div>
           </div>
         </div>

@@ -1,26 +1,31 @@
+'use client';
+
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const NewsPage: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">Latest News</h1>
-        <div className="space-y-6">
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <div className="text-sm text-gray-500 mb-2">April 20, 2026</div>
-            <h3 className="text-2xl font-semibold text-gray-900 mb-3">Klearvoy Launches New Product Line</h3>
-            <p className="text-gray-700 mb-4">
-              We are excited to announce the launch of our new premium hardware collection, designed to meet the evolving needs of modern furniture manufacturers.
+    <div className="min-h-screen bg-background py-12">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <h1 className="text-4xl font-heading text-primary mb-12">{t('news.title')}</h1>
+        <div className="space-y-8">
+          <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-smooth">
+            <div className="text-sm text-accent-dark mb-3">{t('news.date1')}</div>
+            <h3 className="text-2xl font-heading text-primary mb-4">{t('news.news1.title')}</h3>
+            <p className="text-secondary mb-6">
+              {t('news.news1.description')}
             </p>
-            <a href="#" className="text-blue-600 font-medium hover:underline">Read more</a>
+            <a href="#" className="text-primary font-medium hover:text-accent-dark transition-smooth">{t('news.readMore')}</a>
           </div>
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <div className="text-sm text-gray-500 mb-2">March 15, 2026</div>
-            <h3 className="text-2xl font-semibold text-gray-900 mb-3">Expansion of Production Facilities</h3>
-            <p className="text-gray-700 mb-4">
-              Klearvoy has completed the expansion of its production facilities, doubling capacity to meet growing global demand.
+          <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-smooth">
+            <div className="text-sm text-accent-dark mb-3">{t('news.date2')}</div>
+            <h3 className="text-2xl font-heading text-primary mb-4">{t('news.news2.title')}</h3>
+            <p className="text-secondary mb-6">
+              {t('news.news2.description')}
             </p>
-            <a href="#" className="text-blue-600 font-medium hover:underline">Read more</a>
+            <a href="#" className="text-primary font-medium hover:text-accent-dark transition-smooth">{t('news.readMore')}</a>
           </div>
         </div>
       </div>

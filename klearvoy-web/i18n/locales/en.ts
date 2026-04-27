@@ -105,6 +105,56 @@ export default {
     messageRequired: 'Message is required',
     messageTooShort: 'Message must be at least 10 characters',
   },
+  cases: {
+    title: 'Success Cases',
+    client: 'Client',
+    officeProject: {
+      title: 'Office Project',
+      description: 'Complete office furniture solution for a multinational corporation.',
+      client: 'Global Tech Company',
+    },
+    hotelProject: {
+      title: 'Hotel Renovation',
+      description: 'Bespoke furniture solutions for a 5-star hotel chain.',
+      client: 'Luxury Hotel Group',
+    },
+  },
+  news: {
+    title: 'Latest News',
+    readMore: 'Read more',
+    date1: 'April 20, 2026',
+    date2: 'March 15, 2026',
+    news1: {
+      title: 'Klearvoy Launches New Product Line',
+      description: 'We are excited to announce the launch of our new premium hardware collection, designed to meet the evolving needs of modern furniture manufacturers.',
+    },
+    news2: {
+      title: 'Expansion of Production Facilities',
+      description: 'Klearvoy has completed the expansion of its production facilities, doubling capacity to meet growing global demand.',
+    },
+  },
+  download: {
+    title: 'Download Center',
+    productCatalogs: 'Product Catalogs',
+    technicalDocuments: 'Technical Documents',
+    format: 'PDF',
+    type: {
+      catalog: 'Catalog',
+    },
+    download: 'Download',
+    catalog1: {
+      name: 'Klearvoy Catalog 2026',
+    },
+    catalog2: {
+      name: 'Closet Accessories Catalog',
+    },
+    specs: {
+      name: 'Product Specifications',
+    },
+    guide: {
+      name: 'Installation Guide',
+    },
+  },
   footer: {
     description: 'Precision crafted hardware furniture solutions for commercial and residential spaces. Quality craftsmanship meets modern design.',
     quickLinks: 'Quick Links',
