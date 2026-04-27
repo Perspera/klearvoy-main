@@ -27,6 +27,8 @@ const ProductsPage: React.FC = () => {
             fill
             className="object-cover"
             priority
+            sizes="100vw"
+            quality={85}
           />
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
@@ -87,6 +89,9 @@ const ProductsPage: React.FC = () => {
                     alt={product.name}
                     fill
                     className="object-cover group-hover:scale-105 transition-smooth duration-500"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    quality={80}
+                    loading="lazy"
                   />
                 </div>
                 <h3 className="text-2xl font-heading text-primary mb-3">{product.name}</h3>

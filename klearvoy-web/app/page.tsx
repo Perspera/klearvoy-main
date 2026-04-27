@@ -19,6 +19,8 @@ const HomePage: React.FC = () => {
             fill
             className="object-cover"
             priority
+            sizes="100vw"
+            quality={90}
           />
           <div className="absolute inset-0 bg-black/40"></div>
         </div>
@@ -55,19 +57,19 @@ const HomePage: React.FC = () => {
             <div>
               <p className="text-sm tracking-widest text-accent-dark mb-4 uppercase">{t('nav.about').toUpperCase()}</p>
               <h2 className="text-4xl md:text-5xl font-heading text-primary mb-8 leading-tight">
-                Precision in Every Detail
+                {t('home.aboutTitle')}
               </h2>
               <p className="text-secondary leading-relaxed mb-6">
-                Klearvoy is a leading manufacturer of high-quality hardware furniture, integrating R&D, design, production, and global sales. We specialize in durable, ergonomic, and cost-effective solutions for offices, hotels, schools, hospitals, and residential environments.
+                {t('home.aboutDescription1')}
               </p>
               <p className="text-secondary leading-relaxed mb-8">
-                With state-of-the-art production facilities and a strict quality control system, we ensure every product meets international standards for stability, corrosion resistance, and environmental safety.
+                {t('home.aboutDescription2')}
               </p>
               <Link
                 href="/about"
                 className="inline-flex items-center text-sm font-medium tracking-wider text-primary hover:text-accent-dark transition-smooth cursor-pointer group"
               >
-                LEARN MORE ABOUT US
+                {t('home.learnMore')}
                 <svg className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
@@ -79,6 +81,9 @@ const HomePage: React.FC = () => {
                 alt="Klearvoy Production"
                 fill
                 className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                quality={85}
+                loading="lazy"
               />
             </div>
           </div>
@@ -101,15 +106,18 @@ const HomePage: React.FC = () => {
                   alt="Wardrobe Hardware"
                   fill
                   className="object-cover group-hover:scale-105 transition-smooth duration-500"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  quality={80}
+                  loading="lazy"
                 />
               </div>
               <h3 className="text-xl font-heading text-primary mb-2">{t('categories.wardrobe')}</h3>
-              <p className="text-secondary text-sm mb-4">Premium accessories with stable structure</p>
+              <p className="text-secondary text-sm mb-4">{t('home.wardrobeDesc')}</p>
               <Link
                 href="/products"
                 className="text-sm font-medium tracking-wider text-primary hover:text-accent-dark transition-smooth cursor-pointer"
               >
-                VIEW DETAILS →
+                {t('home.viewDetails')} →
               </Link>
             </div>
 
@@ -120,15 +128,18 @@ const HomePage: React.FC = () => {
                   alt="Board Materials"
                   fill
                   className="object-cover group-hover:scale-105 transition-smooth duration-500"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  quality={80}
+                  loading="lazy"
                 />
               </div>
               <h3 className="text-xl font-heading text-primary mb-2">{t('categories.board')}</h3>
-              <p className="text-secondary text-sm mb-4">Custom boards for multiple scenarios</p>
+              <p className="text-secondary text-sm mb-4">{t('home.boardDesc')}</p>
               <Link
                 href="/products"
                 className="text-sm font-medium tracking-wider text-primary hover:text-accent-dark transition-smooth cursor-pointer"
               >
-                VIEW DETAILS →
+                {t('home.viewDetails')} →
               </Link>
             </div>
 
@@ -139,15 +150,18 @@ const HomePage: React.FC = () => {
                   alt="Engineering Solutions"
                   fill
                   className="object-cover group-hover:scale-105 transition-smooth duration-500"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  quality={80}
+                  loading="lazy"
                 />
               </div>
               <h3 className="text-xl font-heading text-primary mb-2">{t('categories.engineering')}</h3>
-              <p className="text-secondary text-sm mb-4">Custom furniture project solutions</p>
+              <p className="text-secondary text-sm mb-4">{t('home.engineeringDesc')}</p>
               <Link
                 href="/products"
                 className="text-sm font-medium tracking-wider text-primary hover:text-accent-dark transition-smooth cursor-pointer"
               >
-                VIEW DETAILS →
+                {t('home.viewDetails')} →
               </Link>
             </div>
           </div>
@@ -168,19 +182,19 @@ const HomePage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
-              <p className="text-4xl md:text-5xl font-heading mb-2">15+</p>
+              <p className="text-4xl md:text-5xl font-heading mb-2">{t('home.statistics.yearsValue')}</p>
               <p className="text-sm tracking-wider text-gray-400">{t('home.statistics.years').toUpperCase()}</p>
             </div>
             <div>
-              <p className="text-4xl md:text-5xl font-heading mb-2">50+</p>
+              <p className="text-4xl md:text-5xl font-heading mb-2">{t('home.statistics.countriesValue')}</p>
               <p className="text-sm tracking-wider text-gray-400">{t('home.statistics.countries').toUpperCase()}</p>
             </div>
             <div>
-              <p className="text-4xl md:text-5xl font-heading mb-2">1000+</p>
+              <p className="text-4xl md:text-5xl font-heading mb-2">{t('home.statistics.productsValue')}</p>
               <p className="text-sm tracking-wider text-gray-400">{t('home.statistics.products').toUpperCase()}</p>
             </div>
             <div>
-              <p className="text-4xl md:text-5xl font-heading mb-2">500+</p>
+              <p className="text-4xl md:text-5xl font-heading mb-2">{t('home.statistics.clientsValue')}</p>
               <p className="text-sm tracking-wider text-gray-400">{t('home.statistics.clients').toUpperCase()}</p>
             </div>
           </div>
