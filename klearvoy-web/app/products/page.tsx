@@ -1,8 +1,17 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { products, categories, ProductCategory } from './data';
 
 const ProductsPage: React.FC = () => {
+  const [selectedCategory, setSelectedCategory] = useState<ProductCategory | 'all'>('all');
+
+  const filteredProducts = selectedCategory === 'all'
+    ? products
+    : products.filter(product => product.category === selectedCategory);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Banner */}
@@ -22,6 +31,37 @@ const ProductsPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Category Filter */}
+      <section className="py-12 bg-card-bg">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex flex-wrap justify-center gap-4">
+            <button
+              onClick={() => setSelectedCategory('all')}
+              className={`px-6 py-3 text-sm font-medium tracking-wider transition-smooth cursor-pointer ${
+                selectedCategory === 'all' 
+                  ? 'bg-primary text-white' 
+                  : 'bg-white text-primary border border-primary hover:bg-primary hover:text-white'
+              }`}
+            >
+              All Products
+            </button>
+            {categories.map(category => (
+              <button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id as ProductCategory)}
+                className={`px-6 py-3 text-sm font-medium tracking-wider transition-smooth cursor-pointer ${
+                  selectedCategory === category.id 
+                    ? 'bg-primary text-white' 
+                    : 'bg-white text-primary border border-primary hover:bg-primary hover:text-white'
+                }`}
+              >
+                {category.icon} {category.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Products Grid */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -31,57 +71,37 @@ const ProductsPage: React.FC = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {/* Product 1 */}
-            <div className="group">
-              <div className="relative h-96 overflow-hidden mb-6 bg-card-bg">
-                <Image
-                  src="/assets/images/products/wardrobe-handle-butterfly.png"
-                  alt="Premium Wardrobe Hardware"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-smooth duration-500"
-                />
-              </div>
-              <h3 className="text-2xl font-heading text-primary mb-3">Premium Wardrobe Hardware</h3>
-              <p className="text-secondary leading-relaxed mb-4">
-                High-quality wardrobe accessories with stable structure. Designed for durability and smooth operation.
-              </p>
-              <div className="text-sm font-medium text-accent-dark tracking-wider">CUSTOMIZED AVAILABLE</div>
-            </div>
-            
-            {/* Product 2 */}
-            <div className="group">
-              <div className="relative h-96 overflow-hidden mb-6 bg-card-bg">
-                <Image
-                  src="/assets/images/products/premium-board-materials.png"
-                  alt="Premium Board Materials"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-smooth duration-500"
-                />
-              </div>
-              <h3 className="text-2xl font-heading text-primary mb-3">Premium Board Materials</h3>
-              <p className="text-secondary leading-relaxed mb-4">
-                Custom boards for multiple scenarios. Perfect for various furniture applications with superior quality.
-              </p>
-              <div className="text-sm font-medium text-accent-dark tracking-wider">CUSTOMIZED AVAILABLE</div>
-            </div>
-            
-            {/* Product 3 */}
-            <div className="group">
-              <div className="relative h-96 overflow-hidden mb-6 bg-card-bg">
-                <Image
-                  src="/assets/images/products/engineering-solution-scene.png"
-                  alt="Engineering Solutions"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-smooth duration-500"
-                />
-              </div>
-              <h3 className="text-2xl font-heading text-primary mb-3">Engineering Solutions</h3>
-              <p className="text-secondary leading-relaxed mb-4">
-                Custom furniture project solutions. From concept to completion, tailored to your needs.
-              </p>
-              <div className="text-sm font-medium text-accent-dark tracking-wider">CUSTOMIZED AVAILABLE</div>
-            </div>
+            {filteredProducts.map(product => (
+              <Link
+                key={product.id}
+                href={`/products/${product.id}`}
+                className="group block"
+              >
+                <div className="relative h-96 overflow-hidden mb-6 bg-card-bg">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-smooth duration-500"
+                  />
+                </div>
+                <h3 className="text-2xl font-heading text-primary mb-3">{product.name}</h3>
+                <p className="text-secondary leading-relaxed mb-4">
+                  {product.description}
+                </p>
+                {product.isCustomizable && (
+                  <div className="text-sm font-medium text-accent-dark tracking-wider">CUSTOMIZED AVAILABLE</div>
+                )}
+              </Link>
+            ))}
           </div>
+
+          {/* Empty State */}
+          {filteredProducts.length === 0 && (
+            <div className="text-center py-20">
+              <p className="text-secondary text-lg">No products found in this category</p>
+            </div>
+          )}
         </div>
       </section>
 
