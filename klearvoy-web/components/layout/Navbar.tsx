@@ -2,18 +2,21 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from '../LanguageSwitcher';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { t } = useTranslation();
 
   const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
-    { name: 'Products', href: '/products' },
-    { name: 'Cases', href: '/cases' },
-    { name: 'News', href: '/news' },
-    { name: 'Contact', href: '/contact' },
-    { name: 'Download', href: '/download' },
+    { name: t('nav.home'), href: '/' },
+    { name: t('nav.about'), href: '/about' },
+    { name: t('nav.products'), href: '/products' },
+    { name: t('nav.cases'), href: '/cases' },
+    { name: t('nav.news'), href: '/news' },
+    { name: t('nav.contact'), href: '/contact' },
+    { name: t('nav.download'), href: '/download' },
   ];
 
   return (
@@ -36,12 +39,13 @@ const Navbar: React.FC = () => {
             ))}
           </div>
 
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-6">
+            <LanguageSwitcher />
             <Link
               href="/contact"
               className="bg-primary text-white px-6 py-3 text-sm font-medium tracking-wide hover:bg-secondary transition-smooth cursor-pointer"
             >
-              Get Quote
+              {t('nav.getQuote')}
             </Link>
           </div>
 
@@ -73,13 +77,16 @@ const Navbar: React.FC = () => {
                 {link.name}
               </Link>
             ))}
-            <Link
-              href="/contact"
-              className="block bg-primary text-white px-6 py-3 text-center text-sm font-medium tracking-wide hover:bg-secondary transition-smooth cursor-pointer mt-4"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Get Quote
-            </Link>
+            <div className="flex items-center gap-4 mt-4">
+              <LanguageSwitcher />
+              <Link
+                href="/contact"
+                className="flex-1 bg-primary text-white px-6 py-3 text-center text-sm font-medium tracking-wide hover:bg-secondary transition-smooth cursor-pointer"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t('nav.getQuote')}
+              </Link>
+            </div>
           </div>
         </div>
       )}

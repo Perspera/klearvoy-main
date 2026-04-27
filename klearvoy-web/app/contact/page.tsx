@@ -2,9 +2,11 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { useTranslation } from 'react-i18next';
 import { ContactFormData, FormErrors, validateForm } from '@/lib/contact-form';
 
 const ContactPage: React.FC = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
@@ -73,7 +75,7 @@ const ContactPage: React.FC = () => {
       }
     } catch (error) {
       setSubmitStatus('error');
-      setStatusMessage('Network error. Please check your connection and try again.');
+      setStatusMessage(t('contact.errorMessage'));
     } finally {
       setIsSubmitting(false);
     }
@@ -86,7 +88,7 @@ const ContactPage: React.FC = () => {
         <div className="absolute inset-0">
           <Image
             src="/assets/images/hero/home-banner-bg.png"
-            alt="Contact Us"
+            alt={t('contact.title')}
             fill
             className="object-cover"
             priority
@@ -94,7 +96,7 @@ const ContactPage: React.FC = () => {
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full">
-          <h1 className="text-5xl md:text-6xl font-heading text-white">Contact Us</h1>
+          <h1 className="text-5xl md:text-6xl font-heading text-white">{t('contact.title')}</h1>
         </div>
       </section>
 
@@ -104,31 +106,28 @@ const ContactPage: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Contact Info */}
             <div>
-              <p className="text-sm tracking-widest text-accent-dark mb-4 uppercase">Get In Touch</p>
-              <h2 className="text-4xl font-heading text-primary mb-8">Let's Discuss Your Project</h2>
+              <p className="text-sm tracking-widest text-accent-dark mb-4 uppercase">{t('contact.getInTouch').toUpperCase()}</p>
+              <h2 className="text-4xl font-heading text-primary mb-8">{t('contact.letsDiscuss')}</h2>
 
               <div className="space-y-8">
                 <div>
-                  <h3 className="text-lg font-heading text-primary mb-3">Factory Address</h3>
-                  <p className="text-secondary leading-relaxed">
-                    Block B, No.168, Yihe Industrial Zone<br />
-                    Lishui Town, Nanhai District, Foshan
-                  </p>
+                  <h3 className="text-lg font-heading text-primary mb-3">{t('contact.factoryAddress')}</h3>
+                  <p className="text-secondary leading-relaxed" dangerouslySetInnerHTML={{ __html: t('contact.address') }} />
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-heading text-primary mb-3">Phone / WhatsApp</h3>
+                  <h3 className="text-lg font-heading text-primary mb-3">{t('contact.phone')}</h3>
                   <p className="text-secondary">+86 156 9241 5580</p>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-heading text-primary mb-3">Email</h3>
+                  <h3 className="text-lg font-heading text-primary mb-3">{t('contact.email')}</h3>
                   <p className="text-secondary">info@klearvoy.com</p>
                   <p className="text-secondary">hudson.zheng@klearvoy.com</p>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-heading text-primary mb-3">WhatsApp</h3>
+                  <h3 className="text-lg font-heading text-primary mb-3">{t('contact.whatsapp')}</h3>
                   <div className="mt-3">
                     <Image
                       src="/assets/images/contact/whatsapp-qr-code.jpg"
@@ -144,24 +143,24 @@ const ContactPage: React.FC = () => {
 
             {/* Contact Form */}
             <div className="bg-card-bg p-10">
-              <h3 className="text-2xl font-heading text-primary mb-8">Send Us a Message</h3>
+              <h3 className="text-2xl font-heading text-primary mb-8">{t('contact.sendMessage')}</h3>
 
               {submitStatus === 'success' && (
                 <div className="mb-6 p-4 bg-green-50 border border-green-200 text-green-800 rounded">
-                  {statusMessage}
+                  {t('contact.successMessage')}
                 </div>
               )}
 
               {submitStatus === 'error' && (
                 <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-800 rounded">
-                  {statusMessage}
+                  {statusMessage || t('contact.errorMessage')}
                 </div>
               )}
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-primary mb-2">
-                    Name <span className="text-red-500">*</span>
+                    {t('contact.name')} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -172,16 +171,16 @@ const ContactPage: React.FC = () => {
                     className={`w-full px-4 py-3 bg-white border ${
                       errors.name ? 'border-red-500' : 'border-border'
                     } focus:border-accent-dark focus:outline-none transition-smooth`}
-                    placeholder="Your name"
+                    placeholder={t('contact.name')}
                   />
                   {errors.name && (
-                    <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+                    <p className="mt-1 text-sm text-red-500">{t('contact.nameRequired')}</p>
                   )}
                 </div>
 
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-primary mb-2">
-                    Email <span className="text-red-500">*</span>
+                    {t('contact.emailLabel')} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="email"
@@ -192,16 +191,18 @@ const ContactPage: React.FC = () => {
                     className={`w-full px-4 py-3 bg-white border ${
                       errors.email ? 'border-red-500' : 'border-border'
                     } focus:border-accent-dark focus:outline-none transition-smooth`}
-                    placeholder="your@email.com"
+                    placeholder={t('contact.emailLabel')}
                   />
                   {errors.email && (
-                    <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                    <p className="mt-1 text-sm text-red-500">
+                      {errors.email === 'Email is required' ? t('contact.emailRequired') : t('contact.emailInvalid')}
+                    </p>
                   )}
                 </div>
 
                 <div>
                   <label htmlFor="phone" className="block text-sm font-medium text-primary mb-2">
-                    Phone / WhatsApp
+                    {t('contact.phoneLabel')}
                   </label>
                   <input
                     type="tel"
@@ -216,7 +217,7 @@ const ContactPage: React.FC = () => {
 
                 <div>
                   <label htmlFor="company" className="block text-sm font-medium text-primary mb-2">
-                    Company
+                    {t('contact.company')}
                   </label>
                   <input
                     type="text"
@@ -225,13 +226,13 @@ const ContactPage: React.FC = () => {
                     value={formData.company}
                     onChange={handleChange}
                     className="w-full px-4 py-3 bg-white border border-border focus:border-accent-dark focus:outline-none transition-smooth"
-                    placeholder="Your company name"
+                    placeholder={t('contact.company')}
                   />
                 </div>
 
                 <div>
                   <label htmlFor="subject" className="block text-sm font-medium text-primary mb-2">
-                    Subject
+                    {t('contact.subject')}
                   </label>
                   <input
                     type="text"
@@ -240,13 +241,13 @@ const ContactPage: React.FC = () => {
                     value={formData.subject}
                     onChange={handleChange}
                     className="w-full px-4 py-3 bg-white border border-border focus:border-accent-dark focus:outline-none transition-smooth"
-                    placeholder="Inquiry about..."
+                    placeholder={t('contact.subject')}
                   />
                 </div>
 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-primary mb-2">
-                    Message <span className="text-red-500">*</span>
+                    {t('contact.message')} <span className="text-red-500">*</span>
                   </label>
                   <textarea
                     id="message"
@@ -257,10 +258,12 @@ const ContactPage: React.FC = () => {
                     className={`w-full px-4 py-3 bg-white border ${
                       errors.message ? 'border-red-500' : 'border-border'
                     } focus:border-accent-dark focus:outline-none transition-smooth resize-none`}
-                    placeholder="Tell us about your project, requirements, or questions..."
+                    placeholder={t('contact.message')}
                   ></textarea>
                   {errors.message && (
-                    <p className="mt-1 text-sm text-red-500">{errors.message}</p>
+                    <p className="mt-1 text-sm text-red-500">
+                      {errors.message === 'Message is required' ? t('contact.messageRequired') : t('contact.messageTooShort')}
+                    </p>
                   )}
                 </div>
 
@@ -273,7 +276,7 @@ const ContactPage: React.FC = () => {
                       : 'bg-primary text-white hover:bg-secondary'
                   }`}
                 >
-                  {isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}
+                  {isSubmitting ? t('contact.sending') : t('contact.send')}
                 </button>
               </form>
             </div>

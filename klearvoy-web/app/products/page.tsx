@@ -3,14 +3,18 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { products, categories, ProductCategory } from './data';
+import { useTranslation } from 'react-i18next';
+import { products, ProductCategory } from './data';
 
 const ProductsPage: React.FC = () => {
+  const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory | 'all'>('all');
 
   const filteredProducts = selectedCategory === 'all'
     ? products
     : products.filter(product => product.category === selectedCategory);
+
+  const categoryKeys = ['wardrobe', 'board', 'engineering', 'handle', 'hinge', 'slide'] as const;
 
   return (
     <div className="min-h-screen bg-background">
@@ -19,7 +23,7 @@ const ProductsPage: React.FC = () => {
         <div className="absolute inset-0">
           <Image
             src="/assets/images/hero/home-banner-bg.png"
-            alt="Our Products"
+            alt={t('products.title')}
             fill
             className="object-cover"
             priority
@@ -27,7 +31,7 @@ const ProductsPage: React.FC = () => {
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full">
-          <h1 className="text-5xl md:text-6xl font-heading text-white">Our Products</h1>
+          <h1 className="text-5xl md:text-6xl font-heading text-white">{t('products.title')}</h1>
         </div>
       </section>
 
@@ -38,24 +42,24 @@ const ProductsPage: React.FC = () => {
             <button
               onClick={() => setSelectedCategory('all')}
               className={`px-6 py-3 text-sm font-medium tracking-wider transition-smooth cursor-pointer ${
-                selectedCategory === 'all' 
-                  ? 'bg-primary text-white' 
+                selectedCategory === 'all'
+                  ? 'bg-primary text-white'
                   : 'bg-white text-primary border border-primary hover:bg-primary hover:text-white'
               }`}
             >
-              All Products
+              {t('products.allProducts')}
             </button>
-            {categories.map(category => (
+            {categoryKeys.map(key => (
               <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id as ProductCategory)}
+                key={key}
+                onClick={() => setSelectedCategory(key)}
                 className={`px-6 py-3 text-sm font-medium tracking-wider transition-smooth cursor-pointer ${
-                  selectedCategory === category.id 
-                    ? 'bg-primary text-white' 
+                  selectedCategory === key
+                    ? 'bg-primary text-white'
                     : 'bg-white text-primary border border-primary hover:bg-primary hover:text-white'
                 }`}
               >
-                {category.icon} {category.name}
+                {t(`categories.${key}`)}
               </button>
             ))}
           </div>
@@ -66,10 +70,10 @@ const ProductsPage: React.FC = () => {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
-            <p className="text-sm tracking-widest text-accent-dark mb-4 uppercase">Product Range</p>
-            <h2 className="text-4xl font-heading text-primary">Premium Hardware Solutions</h2>
+            <p className="text-sm tracking-widest text-accent-dark mb-4 uppercase">{t('products.subtitle')}</p>
+            <h2 className="text-4xl font-heading text-primary">{t('products.heading')}</h2>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {filteredProducts.map(product => (
               <Link
@@ -90,7 +94,7 @@ const ProductsPage: React.FC = () => {
                   {product.description}
                 </p>
                 {product.isCustomizable && (
-                  <div className="text-sm font-medium text-accent-dark tracking-wider">CUSTOMIZED AVAILABLE</div>
+                  <div className="text-sm font-medium text-accent-dark tracking-wider">{t('products.customizeAvailable')}</div>
                 )}
               </Link>
             ))}
@@ -99,7 +103,7 @@ const ProductsPage: React.FC = () => {
           {/* Empty State */}
           {filteredProducts.length === 0 && (
             <div className="text-center py-20">
-              <p className="text-secondary text-lg">No products found in this category</p>
+              <p className="text-secondary text-lg">{t('products.noProducts')}</p>
             </div>
           )}
         </div>
@@ -108,15 +112,15 @@ const ProductsPage: React.FC = () => {
       {/* CTA */}
       <section className="py-24 bg-card-bg">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-heading text-primary mb-6">Need Custom Solutions?</h2>
+          <h2 className="text-4xl font-heading text-primary mb-6">{t('home.contactCTA.title')}</h2>
           <p className="text-secondary text-lg mb-10 max-w-2xl mx-auto">
-            We provide customized products to meet your specific project requirements
+            {t('home.contactCTA.subtitle')}
           </p>
           <Link
             href="/contact"
             className="inline-block bg-primary text-white px-10 py-4 text-sm font-medium tracking-wider hover:bg-secondary transition-smooth cursor-pointer"
           >
-            CONTACT US
+            {t('home.contactCTA.button')}
           </Link>
         </div>
       </section>

@@ -1,8 +1,13 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useTranslation } from 'react-i18next';
 
 const HomePage: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section - Clean and Bold */}
@@ -20,23 +25,23 @@ const HomePage: React.FC = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full">
           <div className="max-w-2xl">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading text-white mb-6 leading-tight">
-              Crafted for Quality
+              {t('home.heroTitle')}
             </h1>
             <p className="text-lg md:text-xl text-gray-200 mb-10 leading-relaxed max-w-lg">
-              Premium hardware furniture solutions designed for durability and modern living
+              {t('home.heroSubtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href="/products"
                 className="bg-white text-primary px-8 py-4 text-sm font-medium tracking-wider hover:bg-accent hover:text-white transition-smooth cursor-pointer text-center"
               >
-                EXPLORE PRODUCTS
+                {t('home.exploreProducts')}
               </Link>
               <Link
                 href="/contact"
                 className="border border-white text-white px-8 py-4 text-sm font-medium tracking-wider hover:bg-white hover:text-primary transition-smooth cursor-pointer text-center"
               >
-                CONTACT US
+                {t('home.contactUs')}
               </Link>
             </div>
           </div>
@@ -48,7 +53,7 @@ const HomePage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <p className="text-sm tracking-widest text-accent-dark mb-4 uppercase">About Us</p>
+              <p className="text-sm tracking-widest text-accent-dark mb-4 uppercase">{t('nav.about').toUpperCase()}</p>
               <h2 className="text-4xl md:text-5xl font-heading text-primary mb-8 leading-tight">
                 Precision in Every Detail
               </h2>
@@ -84,10 +89,10 @@ const HomePage: React.FC = () => {
       <section className="py-24 bg-card-bg">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
-            <p className="text-sm tracking-widest text-accent-dark mb-4 uppercase">Our Products</p>
-            <h2 className="text-4xl md:text-5xl font-heading text-primary">Featured Solutions</h2>
+            <p className="text-sm tracking-widest text-accent-dark mb-4 uppercase">{t('nav.products').toUpperCase()}</p>
+            <h2 className="text-4xl md:text-5xl font-heading text-primary">{t('home.featuredProducts')}</h2>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="group cursor-pointer">
               <div className="relative h-80 overflow-hidden mb-6 bg-white">
@@ -98,7 +103,7 @@ const HomePage: React.FC = () => {
                   className="object-cover group-hover:scale-105 transition-smooth duration-500"
                 />
               </div>
-              <h3 className="text-xl font-heading text-primary mb-2">Wardrobe Hardware</h3>
+              <h3 className="text-xl font-heading text-primary mb-2">{t('categories.wardrobe')}</h3>
               <p className="text-secondary text-sm mb-4">Premium accessories with stable structure</p>
               <Link
                 href="/products"
@@ -107,7 +112,7 @@ const HomePage: React.FC = () => {
                 VIEW DETAILS →
               </Link>
             </div>
-            
+
             <div className="group cursor-pointer">
               <div className="relative h-80 overflow-hidden mb-6 bg-white">
                 <Image
@@ -117,7 +122,7 @@ const HomePage: React.FC = () => {
                   className="object-cover group-hover:scale-105 transition-smooth duration-500"
                 />
               </div>
-              <h3 className="text-xl font-heading text-primary mb-2">Board Materials</h3>
+              <h3 className="text-xl font-heading text-primary mb-2">{t('categories.board')}</h3>
               <p className="text-secondary text-sm mb-4">Custom boards for multiple scenarios</p>
               <Link
                 href="/products"
@@ -126,7 +131,7 @@ const HomePage: React.FC = () => {
                 VIEW DETAILS →
               </Link>
             </div>
-            
+
             <div className="group cursor-pointer">
               <div className="relative h-80 overflow-hidden mb-6 bg-white">
                 <Image
@@ -136,7 +141,7 @@ const HomePage: React.FC = () => {
                   className="object-cover group-hover:scale-105 transition-smooth duration-500"
                 />
               </div>
-              <h3 className="text-xl font-heading text-primary mb-2">Engineering Solutions</h3>
+              <h3 className="text-xl font-heading text-primary mb-2">{t('categories.engineering')}</h3>
               <p className="text-secondary text-sm mb-4">Custom furniture project solutions</p>
               <Link
                 href="/products"
@@ -146,13 +151,13 @@ const HomePage: React.FC = () => {
               </Link>
             </div>
           </div>
-          
+
           <div className="text-center mt-12">
             <Link
               href="/products"
               className="inline-block border-2 border-primary text-primary px-10 py-4 text-sm font-medium tracking-wider hover:bg-primary hover:text-white transition-smooth cursor-pointer"
             >
-              VIEW ALL PRODUCTS
+              {t('home.viewAll')}
             </Link>
           </div>
         </div>
@@ -164,19 +169,19 @@ const HomePage: React.FC = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
               <p className="text-4xl md:text-5xl font-heading mb-2">15+</p>
-              <p className="text-sm tracking-wider text-gray-400">YEARS EXPERIENCE</p>
+              <p className="text-sm tracking-wider text-gray-400">{t('home.statistics.years').toUpperCase()}</p>
             </div>
             <div>
               <p className="text-4xl md:text-5xl font-heading mb-2">50+</p>
-              <p className="text-sm tracking-wider text-gray-400">COUNTRIES SERVED</p>
+              <p className="text-sm tracking-wider text-gray-400">{t('home.statistics.countries').toUpperCase()}</p>
             </div>
             <div>
               <p className="text-4xl md:text-5xl font-heading mb-2">1000+</p>
-              <p className="text-sm tracking-wider text-gray-400">PROJECTS COMPLETED</p>
+              <p className="text-sm tracking-wider text-gray-400">{t('home.statistics.products').toUpperCase()}</p>
             </div>
             <div>
               <p className="text-4xl md:text-5xl font-heading mb-2">500+</p>
-              <p className="text-sm tracking-wider text-gray-400">HAPPY CLIENTS</p>
+              <p className="text-sm tracking-wider text-gray-400">{t('home.statistics.clients').toUpperCase()}</p>
             </div>
           </div>
         </div>
@@ -186,16 +191,16 @@ const HomePage: React.FC = () => {
       <section className="py-24 bg-white">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h2 className="text-4xl md:text-5xl font-heading text-primary mb-6">
-            Ready to Start Your Project?
+            {t('home.contactCTA.title')}
           </h2>
           <p className="text-secondary text-lg mb-10 max-w-2xl mx-auto">
-            Contact us today to discuss your hardware furniture needs and receive a personalized solution
+            {t('home.contactCTA.subtitle')}
           </p>
           <Link
             href="/contact"
             className="inline-block bg-primary text-white px-10 py-4 text-sm font-medium tracking-wider hover:bg-secondary transition-smooth cursor-pointer"
           >
-            GET IN TOUCH
+            {t('home.contactCTA.button')}
           </Link>
         </div>
       </section>
