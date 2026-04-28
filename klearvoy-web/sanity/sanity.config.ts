@@ -4,9 +4,9 @@ import { visionTool } from '@sanity/vision'
 import { schemaTypes } from './schemaTypes'
 
 export default defineConfig({
-  name: 'default',
+  name: 'klearvoy-web',
   title: 'Klearvoy Hardware CMS',
-  projectId: 'your-project-id',
+  projectId: 'k68hiu2m', // 替换为实际项目 ID
   dataset: 'production',
   plugins: [structureTool(), visionTool()],
   schema: {
