@@ -11,12 +11,10 @@ async function ProductsServer() {
 }
 
 // Client Component for rendering
-'use client';
-import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
-
 function ProductsClient({ products }: { products: Product[] }) {
-  const { t, i18n } = useTranslation();
+  'use client';
+  
+  const { t, i18n } = require('react-i18next').useTranslation();
   const isZh = i18n.language === 'zh';
 
   const categories = [

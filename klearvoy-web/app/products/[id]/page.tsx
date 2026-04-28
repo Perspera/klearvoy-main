@@ -24,11 +24,10 @@ async function ProductDetailServer({ params }: { params: { id: string } }) {
 }
 
 // Client Component for rendering
-'use client';
-import { useTranslation } from 'react-i18next';
-
 function ProductDetailClient({ product, relatedProducts }: { product: Product; relatedProducts: Product[] }) {
-  const { t, i18n } = useTranslation();
+  'use client';
+  
+  const { t, i18n } = require('react-i18next').useTranslation();
   const isZh = i18n.language === 'zh';
 
   const categoryNames: Record<string, { en: string; zh: string }> = {
@@ -100,7 +99,7 @@ function ProductDetailClient({ product, relatedProducts }: { product: Product; r
               <div className="mb-8">
                 <h3 className="text-lg font-heading text-primary mb-4">{t('product.features')}</h3>
                 <ul className="space-y-2">
-                  {(isZh ? (product.featuresZh || product.features) : product.features).map((feature, index) => (
+                  {(isZh ? (product.featuresZh || product.features) : product.features).map((feature: string, index: number) => (
                     <li key={index} className="flex items-center gap-3">
                       <span className="text-accent-dark font-medium">•</span>
                       <span className="text-secondary">{feature}</span>
@@ -184,7 +183,7 @@ function ProductDetailClient({ product, relatedProducts }: { product: Product; r
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <h2 className="text-3xl font-heading text-primary mb-12 text-center">{t('product.related')}</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {relatedProducts.map(relatedProduct => (
+              {relatedProducts.map((relatedProduct: Product) => (
                 <Link
                   key={relatedProduct._id}
                   href={`/products/${relatedProduct.slug.current}`}
