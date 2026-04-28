@@ -11,6 +11,10 @@ Klearvoy 官方网站工程仓库。
 - `assets/`：仓库内管理的本地静态资源。
 - `docs/`：产品、研发、发布与运维文档。
 - `.github/workflows/`：CI 工作流配置。
+- `app/`：Next.js 应用代码。
+- `sanity/`：Sanity CMS 内容管理系统。
+- `lib/`：数据获取和工具函数。
+- `components/`：React 组件。
 
 ## 开发流程
 
@@ -19,6 +23,112 @@ Klearvoy 官方网站工程仓库。
 3. 在本地实现并测试变更。
 4. 提交 PR，并按 `docs/pr-checklist.md` 完成检查项。
 5. 通过评审且 CI 通过后再合并。
+
+## 项目启动
+
+### 开发环境启动
+
+#### 方式一：同时启动前端和 Sanity（推荐）
+
+打开两个终端窗口：
+
+**终端 1 - 启动前端开发服务器**
+
+```bash
+cd klearvoy-web
+npm run dev
+```
+
+前端运行在：http://localhost:3000/
+
+**终端 2 - 启动 Sanity Studio**
+
+```bash
+cd klearvoy-web/sanity
+sanity dev
+```
+
+Sanity CMS 运行在：http://localhost:3333/
+
+#### 方式二：使用 npm-run-all 并行启动
+
+```bash
+# 安装依赖
+npm install -g npm-run-all
+
+# 在 klearvoy-web 目录下运行
+npm run dev:all
+```
+
+### 访问地址
+
+| 服务 | 地址 | 说明 |
+|------|------|------|
+| **前端网站** | http://localhost:3000/ | Next.js 开发服务器 |
+| **Sanity CMS** | http://localhost:3333/ | 内容管理后台 |
+
+### 生产环境
+
+#### 构建项目
+
+```bash
+cd klearvoy-web
+npm run build
+```
+
+#### 启动生产服务器
+
+```bash
+npm start
+```
+
+### 环境变量配置
+
+在项目根目录创建 `.env.local` 文件：
+
+```env
+# Sanity Configuration
+NEXT_PUBLIC_SANITY_PROJECT_ID=k68hiu2m
+NEXT_PUBLIC_SANITY_DATASET=production
+SANITY_API_TOKEN=your-api-token-here
+
+# Email Configuration
+EMAIL_HOST=smtp.qq.com
+EMAIL_PORT=587
+EMAIL_USER=your-email@qq.com
+EMAIL_PASS=your-email-password
+```
+
+### 启动流程图
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    启动项目流程                             │
+├─────────────────────────────────────────────────────────────┤
+│  1. 打开终端窗口 1                                          │
+│     cd klearvoy-web                                        │
+│     npm run dev                                            │
+│     → 前端运行在 http://localhost:3000/                    │
+├─────────────────────────────────────────────────────────────┤
+│  2. 打开终端窗口 2                                          │
+│     cd klearvoy-web/sanity                                 │
+│     sanity dev                                             │
+│     → Sanity运行在 http://localhost:3333/                  │
+├─────────────────────────────────────────────────────────────┤
+│  3. 在浏览器中访问网站和管理后台                             │
+│     - 网站: http://localhost:3000/                         │
+│     - CMS: http://localhost:3333/                          │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 启动命令速查表
+
+| 操作 | 命令 |
+|------|------|
+| 启动前端 | `cd klearvoy-web && npm run dev` |
+| 启动 Sanity | `cd klearvoy-web/sanity && sanity dev` |
+| 构建项目 | `cd klearvoy-web && npm run build` |
+| 生产启动 | `cd klearvoy-web && npm start` |
 
 ## 本地预览与自检
 
@@ -176,4 +286,3 @@ cd "f:\APP\klearvoy\klearvoy-main\klearvoy-frontend"
 1. 确认最近一个稳定发布标签。
 2. 重新部署稳定版本。
 3. 记录事故说明，包括原因与后续改进动作。
-
