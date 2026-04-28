@@ -1,20 +1,70 @@
 'use client';
 
-import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
-import { products, ProductCategory } from './data';
+import { useEffect, useState } from 'react';
+import { getProducts } from '@/lib/sanity-fetch';
+import type { Product } from '@/lib/sanity-fetch';
 
-const ProductsPage: React.FC = () => {
-  const { t } = useTranslation();
-  const [selectedCategory, setSelectedCategory] = useState<ProductCategory | 'all'>('all');
+const ProductsPage = () => {
+  const { t, i18n } = useTranslation();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const filteredProducts = selectedCategory === 'all'
-    ? products
-    : products.filter(product => product.category === selectedCategory);
+  const isZh = i18n.language === 'zh';
 
-  const categoryKeys = ['wardrobe', 'board', 'engineering', 'handle', 'hinge', 'slide'] as const;
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = await getProducts();
+        setProducts(data);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching products:', err);
+        setError(isZh ? '无法加载产品数据，请检查网络连接或配置' : 'Failed to load products. Please check your network connection or configuration.');
+        setLoading(false);
+      }
+    };
+    fetchProducts();
+  }, [isZh]);
+
+  const categories = [
+    { key: 'wardrobe', label: isZh ? '衣柜五金' : 'Wardrobe Hardware' },
+    { key: 'board', label: isZh ? '板材' : 'Board Materials' },
+    { key: 'engineering', label: isZh ? '工程解决方案' : 'Engineering Solutions' },
+    { key: 'handle', label: isZh ? '拉手旋钮' : 'Handles & Knobs' },
+    { key: 'hinge', label: isZh ? '铰链' : 'Hinges' },
+    { key: 'slide', label: isZh ? '滑轨' : 'Slides' },
+  ];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-primary text-lg">{isZh ? '加载中...' : 'Loading...'}</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="max-w-md text-center">
+          <div className="text-red-500 text-lg mb-4">⚠️</div>
+          <p className="text-primary text-lg mb-4">{error}</p>
+          <div className="text-sm text-secondary bg-gray-100 p-4 rounded">
+            <p className="font-medium mb-2">{isZh ? '可能的解决方案：' : 'Possible solutions:'}</p>
+            <ul className="text-left space-y-2">
+              <li>1. {isZh ? '检查 .env.local 文件中的 SANITY_API_TOKEN 是否已配置' : 'Check if SANITY_API_TOKEN is configured in .env.local'}</li>
+              <li>2. {isZh ? '确保网络连接正常' : 'Ensure network connection is working'}</li>
+              <li>3. {isZh ? '重启开发服务器' : 'Restart the development server'}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -42,26 +92,22 @@ const ProductsPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex flex-wrap justify-center gap-3">
             <button
-              onClick={() => setSelectedCategory('all')}
-              className={`px-8 py-3 text-sm font-medium tracking-wider transition-smooth cursor-pointer rounded-sm ${
-                selectedCategory === 'all'
-                  ? 'bg-primary text-white shadow-md'
-                  : 'bg-white text-primary border border-gray-300 hover:border-primary hover:bg-gray-50'
-              }`}
+              onClick={() => {
+                window.location.href = '/products';
+              }}
+              className="px-8 py-3 text-sm font-medium tracking-wider transition-smooth cursor-pointer rounded-sm bg-primary text-white shadow-md"
             >
               {t('products.allProducts')}
             </button>
-            {categoryKeys.map(key => (
+            {categories.map(category => (
               <button
-                key={key}
-                onClick={() => setSelectedCategory(key)}
-                className={`px-8 py-3 text-sm font-medium tracking-wider transition-smooth cursor-pointer rounded-sm ${
-                  selectedCategory === key
-                    ? 'bg-primary text-white shadow-md'
-                    : 'bg-white text-primary border border-gray-300 hover:border-primary hover:bg-gray-50'
-                }`}
+                key={category.key}
+                onClick={() => {
+                  window.location.href = `/products?category=${category.key}`;
+                }}
+                className="px-8 py-3 text-sm font-medium tracking-wider transition-smooth cursor-pointer rounded-sm bg-white text-primary border border-gray-300 hover:border-primary hover:bg-gray-50"
               >
-                {t(`categories.${key}`)}
+                {category.label}
               </button>
             ))}
           </div>
@@ -77,16 +123,16 @@ const ProductsPage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProducts.map(product => (
+            {products.map(product => (
               <Link
-                key={product.id}
-                href={`/products/${product.id}`}
+                key={product._id}
+                href={`/products/${product.slug.current}`}
                 className="group block"
               >
                 <div className="relative h-80 overflow-hidden mb-6 bg-card-bg rounded-lg">
                   <Image
-                    src={product.image}
-                    alt={product.name}
+                    src={product.image.asset.url}
+                    alt={isZh ? (product.nameZh || product.name) : product.name}
                     fill
                     className="object-cover group-hover:scale-105 transition-smooth duration-500"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -94,19 +140,23 @@ const ProductsPage: React.FC = () => {
                     loading="lazy"
                   />
                 </div>
-                <h3 className="text-xl font-heading text-primary mb-2">{product.name}</h3>
+                <h3 className="text-xl font-heading text-primary mb-2">
+                  {isZh ? (product.nameZh || product.name) : product.name}
+                </h3>
                 <p className="text-secondary leading-relaxed mb-4">
-                  {product.description}
+                  {isZh ? (product.descriptionZh || product.description) : product.description}
                 </p>
                 {product.isCustomizable && (
-                  <div className="inline-block text-sm font-medium text-accent-dark tracking-wider">{t('products.customizeAvailable')}</div>
+                  <div className="inline-block text-sm font-medium text-accent-dark tracking-wider">
+                    {t('products.customizeAvailable')}
+                  </div>
                 )}
               </Link>
             ))}
           </div>
 
           {/* Empty State */}
-          {filteredProducts.length === 0 && (
+          {products.length === 0 && (
             <div className="text-center py-20">
               <p className="text-secondary text-lg">{t('products.noProducts')}</p>
             </div>
