@@ -1,45 +1,35 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
-import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
 import { getProductBySlug, getProducts } from '@/lib/sanity-fetch';
 import type { Product } from '@/lib/sanity-fetch';
-import { useParams } from 'next/navigation';
+import { notFound } from 'next/navigation';
+import 'server-only';
 
-const ProductDetailPage = () => {
+// Server Component to fetch data
+async function ProductDetailServer({ params }: { params: { id: string } }) {
+  const [product, allProducts] = await Promise.all([
+    getProductBySlug(params.id),
+    getProducts()
+  ]);
+  
+  if (!product) {
+    notFound();
+  }
+
+  const relatedProducts = allProducts
+    .filter(p => p._id !== product._id && p.category === product.category)
+    .slice(0, 3);
+
+  return <ProductDetailClient product={product} relatedProducts={relatedProducts} />;
+}
+
+// Client Component for rendering
+'use client';
+import { useTranslation } from 'react-i18next';
+
+function ProductDetailClient({ product, relatedProducts }: { product: Product; relatedProducts: Product[] }) {
   const { t, i18n } = useTranslation();
-  const params = useParams<{ id: string }>();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-
   const isZh = i18n.language === 'zh';
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!params?.id) return;
-      
-      const [productData, allProducts] = await Promise.all([
-        getProductBySlug(params.id),
-        getProducts()
-      ]);
-      
-      setProduct(productData);
-      
-      if (productData) {
-        const related = allProducts
-          .filter(p => p._id !== productData._id && p.category === productData.category)
-          .slice(0, 3);
-        setRelatedProducts(related);
-      }
-      
-      setLoading(false);
-    };
-    
-    fetchData();
-  }, [params?.id]);
 
   const categoryNames: Record<string, { en: string; zh: string }> = {
     wardrobe: { en: 'Wardrobe Hardware', zh: '衣柜五金' },
@@ -49,22 +39,6 @@ const ProductDetailPage = () => {
     hinge: { en: 'Hinges', zh: '铰链' },
     slide: { en: 'Slides', zh: '滑轨' },
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-primary text-lg">Loading...</div>
-      </div>
-    );
-  }
-
-  if (!product) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-primary text-lg">Product not found</div>
-      </div>
-    );
-  }
 
   const categoryName = categoryNames[product.category] || { en: product.category, zh: product.category };
 
@@ -238,6 +212,6 @@ const ProductDetailPage = () => {
       )}
     </div>
   );
-};
+}
 
-export default ProductDetailPage;
+export default ProductDetailServer;

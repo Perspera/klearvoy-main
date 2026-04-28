@@ -1,34 +1,23 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
-import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
 import { getProducts } from '@/lib/sanity-fetch';
 import type { Product } from '@/lib/sanity-fetch';
+import 'server-only';
 
-const ProductsPage = () => {
+// Server Component to fetch data
+async function ProductsServer() {
+  const products = await getProducts();
+  return <ProductsClient products={products} />;
+}
+
+// Client Component for rendering
+'use client';
+import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
+
+function ProductsClient({ products }: { products: Product[] }) {
   const { t, i18n } = useTranslation();
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
   const isZh = i18n.language === 'zh';
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const data = await getProducts();
-        setProducts(data);
-        setLoading(false);
-      } catch (err) {
-        console.error('Error fetching products:', err);
-        setError(isZh ? '无法加载产品数据，请检查网络连接或配置' : 'Failed to load products. Please check your network connection or configuration.');
-        setLoading(false);
-      }
-    };
-    fetchProducts();
-  }, [isZh]);
 
   const categories = [
     { key: 'wardrobe', label: isZh ? '衣柜五金' : 'Wardrobe Hardware' },
@@ -38,33 +27,6 @@ const ProductsPage = () => {
     { key: 'hinge', label: isZh ? '铰链' : 'Hinges' },
     { key: 'slide', label: isZh ? '滑轨' : 'Slides' },
   ];
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-primary text-lg">{isZh ? '加载中...' : 'Loading...'}</div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="max-w-md text-center">
-          <div className="text-red-500 text-lg mb-4">⚠️</div>
-          <p className="text-primary text-lg mb-4">{error}</p>
-          <div className="text-sm text-secondary bg-gray-100 p-4 rounded">
-            <p className="font-medium mb-2">{isZh ? '可能的解决方案：' : 'Possible solutions:'}</p>
-            <ul className="text-left space-y-2">
-              <li>1. {isZh ? '检查 .env.local 文件中的 SANITY_API_TOKEN 是否已配置' : 'Check if SANITY_API_TOKEN is configured in .env.local'}</li>
-              <li>2. {isZh ? '确保网络连接正常' : 'Ensure network connection is working'}</li>
-              <li>3. {isZh ? '重启开发服务器' : 'Restart the development server'}</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -181,6 +143,6 @@ const ProductsPage = () => {
       </section>
     </div>
   );
-};
+}
 
-export default ProductsPage;
+export default ProductsServer;
